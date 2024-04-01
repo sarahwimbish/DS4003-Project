@@ -27,7 +27,7 @@ stylesheet = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = Dash(__name__, external_stylesheets=stylesheet)
 server = app.server
 
-data = pd.read_csv('../DATA/data.csv')
+data = pd.read_csv('DATA/data.csv')
 data['date'] = pd.to_datetime(data['date'])
 
 
