@@ -3,13 +3,10 @@
 ############################################################################################################################################
 from dash import Dash, dcc, html, Input, Output, callback
 import pandas as pd
-from plotly.offline import init_notebook_mode, iplot, plot
 import plotly as py
-init_notebook_mode(connected=True)
 import plotly.graph_objs as go
 import matplotlib.pyplot as plt
 import numpy as np
-import mpld3
 import plotly.tools as tls
 from io import BytesIO
 import base64
@@ -77,12 +74,6 @@ left1 = [
 ############################################################################################################################################
 
 def fig_to_uri(in_fig, close_all=True, **save_args):
-    # type: (plt.Figure) -> str
-    """
-    Save a figure as a URI
-    :param in_fig:
-    :return:
-    """
     out_img = BytesIO()
     in_fig.savefig(out_img, format='png', **save_args)
     if close_all:
