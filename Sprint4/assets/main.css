@@ -1,0 +1,26 @@
+body {
+    background-color: pink;
+}
+
+.DateRangePickerInput{
+    border: 0px;
+    background-color: transparent;
+  }
+
+.container1 {
+  width: 23%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.container2 {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.container3 {
+  width: 24%;
+  display: inline-block;
+  vertical-align: top;
+}
