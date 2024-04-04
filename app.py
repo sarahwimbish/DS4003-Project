@@ -7,7 +7,6 @@ import plotly as py
 import plotly.graph_objs as go
 import matplotlib.pyplot as plt
 import numpy as np
-import mpld3
 import plotly.tools as tls
 from io import BytesIO
 import base64
