@@ -14,12 +14,12 @@ import plotly.express as px
 
 
 
-
 stylesheet = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = Dash(__name__, external_stylesheets=stylesheet)
-server = app.server
 app.css.append_css({"external_url": "/assets/main.css"})
 app.server.static_folder = "assets"
+
+server = app.server
 
 data = pd.read_csv('data/data.csv')
 data['date'] = pd.to_datetime(data['date'])
