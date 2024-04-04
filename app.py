@@ -85,6 +85,7 @@ top_artists = [
 ############################################################################################################################################
 
 def fig_to_uri(in_fig, close_all=True, **save_args):
+    # type: (plt.Figure) -> str
     """
     Save a figure as a URI
     :param in_fig:
@@ -122,7 +123,7 @@ app.layout = html.Div( # entire page
             [ 
 
                 html.Div(left1, # left 3 col of left 
-                        className= "container1", 
+                        className= "three columns", 
                         style={"border":"2px {boarder}", 
                                 'align-items':'center', 
                                 'justify-content':'center', 
@@ -151,11 +152,11 @@ app.layout = html.Div( # entire page
                                                                     'background-color': 'white',
                                                                     'padding':'5px',
                                                                     'margin':'5px 0px 0px 0px'}),
-                        html.Div(top_artists, style={'background-color':'white', 
+                        html.Div(top_artists, id = 'artists-list', style={'background-color':'white', 
                                                     'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
                                                     'margin':'5px 0px', 'padding':'5px'}), 
                     
-                    ], className='container2', style ={'margin':'0px 5px'}),
+                    ], className='six columns', style ={'margin':'0px 5px'}),
 
 
 
@@ -175,7 +176,7 @@ app.layout = html.Div( # entire page
                                                                      'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
                                                                      'margin':'5px 5px', 
                                                                      'padding':'5px' })
-                        ], className = 'container3', style={})
+                        ], className = 'three columns', style={})
     ], style={"border":"2px {border}", 'margin-top': '0px'}) ], className='row', style={'backgroundColor':'pink'})
 
 
