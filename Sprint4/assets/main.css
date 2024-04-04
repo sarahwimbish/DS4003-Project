@@ -8,7 +8,7 @@ body {
   }
 
 .container1 {
-  width: 23%;
+  width: 20%;
   display: inline-block;
   vertical-align: top;
 }
@@ -20,7 +20,7 @@ body {
 }
 
 .container3 {
-  width: 24%;
+  width: 28%;
   display: inline-block;
   vertical-align: top;
 }
