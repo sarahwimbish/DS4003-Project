@@ -1,5 +1,26 @@
 body {
-    background-color: pink;
+    background-color: rgb(251, 222, 226);
+}
+
+P {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+H2 {
+  margin: 0;
+  padding: 0;
+}
+
+H4{
+  text-align: center;
+}
+
+H6 {
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 .DateRangePickerInput{
