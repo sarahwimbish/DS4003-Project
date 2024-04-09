@@ -14,4 +14,4 @@ Dashboard Notebook | [4](https://github.com/sarahwimbish/DS4003-Project/blob/mai
 app.py | [4](https://github.com/sarahwimbish/DS4003-Project/blob/main/app.py)
 Deployed Dashboard | [4](https://wimbish-ds4003-project.onrender.com/)
 
-LINK TO DASHBOARD: https://wimbish-ds4003-project.onrender.com/
+LINK TO DASHBOARD (as of 4/4/24): https://wimbish-ds4003-project.onrender.com/
