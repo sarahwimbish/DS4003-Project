@@ -76,16 +76,26 @@ left1 = [
 ]
 
 top_artists = [
-    html.Div(html.H4(["Top", html.Br(), 'Artists']), className = 'three columns'), 
-    html.Div(html.P("widgets"), className = 'three columns'), 
-    html.Div(html.P("widgets"), className = 'three columns')
+    html.Div(html.H4(["My Top", html.Br(), 'Artists']), className = 'three columns'), 
+    html.Div(className = 'three columns', id = 'artists1'), 
+    html.Div(className = 'three columns', id = 'artists2'),
+    html.Div(className = 'three columns', id = 'artists3')
+
 ]
+
+top_songs = [
+    html.Div(html.H4(["My Top", html.Br(), 'Songs']), className = 'three columns'), 
+    html.Div(className = 'three columns', id = 'song1'), 
+    html.Div(className = 'three columns', id = 'song2'),
+    html.Div(className = 'three columns', id = 'song3')
+
+]
+
 ############################################################################################################################################
 #######################################################            IMAGE EXPORT           ##################################################
 ############################################################################################################################################
 
 def fig_to_uri(in_fig, close_all=True, **save_args):
-    # type: (plt.Figure) -> str
     """
     Save a figure as a URI
     :param in_fig:
@@ -123,7 +133,7 @@ app.layout = html.Div( # entire page
             [ 
 
                 html.Div(left1, # left 3 col of left 
-                        className= "three columns", 
+                        className= "container1", 
                         style={"border":"2px {boarder}", 
                                 'align-items':'center', 
                                 'justify-content':'center', 
@@ -152,18 +162,29 @@ app.layout = html.Div( # entire page
                                                                     'background-color': 'white',
                                                                     'padding':'5px',
                                                                     'margin':'5px 0px 0px 0px'}),
-                        html.Div(top_artists, id = 'artists-list', style={'background-color':'white', 
-                                                    'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
-                                                    'margin':'5px 0px', 'padding':'5px'}), 
-                    
-                    ], className='six columns', style ={'margin':'0px 5px'}),
+                        html.Div(top_artists, style={'border-radius':f'{curve}px {curve}px {curve}px {curve}px',
+                                                                    'background-color': 'white',
+                                                                    'margin':'5px 0px 0px 0px', 
+                                                                    'overflow': 'hidden',
+                                                                    'align-items': 'center',
+                                                                     'justify-content': 'center',}),
+                        html.Div(top_songs, style={'border-radius':f'{curve}px {curve}px {curve}px {curve}px',
+                                                                    'background-color': 'white',
+                                                                    'margin':'5px 0px 0px 0px', 
+                                                                    'overflow': 'hidden',
+                                                                    'align-items': 'center',
+                                                                     'justify-content': 'center'})                      
+                    ], className='container2', style ={'margin':'0px 5px'}),
 
 
 
                     html.Div( ## right panel 
                         [html.Div([html.Img(id = 'plot1', src = '', style={'width': '320px',  ### want 380px but moves out of the div 
                                                                     'height': '320px',
-                                                                    'padding':'5px'}),
+                                                                    'padding':'5px',
+                                                                    'padding-left':'35px',
+                                                                    'align-items': 'center',
+                                                                     'justify-content': 'center'}),
                         dcc.RadioItems(options = ["AM", "PM"],
                                     value = "AM",
                                     inline = True,
@@ -175,9 +196,11 @@ app.layout = html.Div( # entire page
                         html.Div(dcc.Graph(id='bar-plot'), style ={'background-color':'white', 
                                                                      'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
                                                                      'margin':'5px 5px', 
-                                                                     'padding':'5px' })
-                        ], className = 'three columns', style={})
-    ], style={"border":"2px {border}", 'margin-top': '0px'}) ], className='row', style={'backgroundColor':'pink'})
+                                                                     'padding':'5px',
+                                                                     'padding-left':'35px', }),
+                        # DashIconify(icon="ion:logo-github", width=30, href='github.com')
+                        ], className = 'container3', style={})
+    ], style={"border":"2px {border}", 'margin-top': '0px'}) ], className='row')
 
 
 if __name__ == '__main__':
@@ -206,17 +229,18 @@ def get_streaming_minutes(start, end):
 )
 def get_different_songs(start, end):
     data_filtered = data[data['date'].between(start, end)]
+    data_filtered = data_filtered[data_filtered['played']==True]
     diff_songs = data_filtered['trackName'].nunique()
     return str(diff_songs)
-
 
 @callback(
         Output('different_artists', 'children'),
         Input('date-slider', 'start_date'),
         Input('date-slider', 'end_date')
 )
-def get_different_songs(start, end):
+def get_different_artists(start, end):
     data_filtered = data[data['date'].between(start, end)]
+    data_filtered = data_filtered[data_filtered['played']==True]
     diff_artists = data_filtered['artistName'].nunique()
     return str(diff_artists)
 
@@ -235,6 +259,73 @@ def get_date_annotations(start, end):
 )
 def reset_date_range_slider(n_clicks):
     return data['date'].min(), data['date'].max()
+
+@callback(
+    Output('artists1', 'children'),
+    Input('date-slider', 'start_date'),
+    Input('date-slider', 'end_date')
+)
+def get_artist1(start, end):
+    data_filtered = data[data['date'].between(start, end)]
+    top = data_filtered.groupby('artistName', as_index=False)['minutes'].sum()
+    top = top.sort_values('minutes', ascending = False).reset_index()
+    return [html.H6(f"1. {top['artistName'][0]}"), html.P(f"{round(top['minutes'][0])} minutes")]
+
+@callback(
+    Output('artists2', 'children'),
+    Input('date-slider', 'start_date'),
+    Input('date-slider', 'end_date')
+)
+def get_artist2(start, end):
+    data_filtered = data[data['date'].between(start, end)]
+    top = data_filtered.groupby('artistName', as_index=False)['minutes'].sum()
+    top = top.sort_values('minutes', ascending = False).reset_index()
+    return [html.H6(f"2. {top['artistName'][1]}"), html.P(f"{round(top['minutes'][1])} minutes")]
+
+@callback(
+    Output('artists3', 'children'),
+    Input('date-slider', 'start_date'),
+    Input('date-slider', 'end_date')
+)
+def get_artist3(start, end):
+    data_filtered = data[data['date'].between(start, end)]
+    top = data_filtered.groupby('artistName', as_index=False)['minutes'].sum()
+    top = top.sort_values('minutes', ascending = False).reset_index()
+    return [html.H6(f"3. {top['artistName'][2]}"), html.P(f"{round(top['minutes'][2])} minutes")]
+
+
+@callback(
+    Output('song1', 'children'),
+    Input('date-slider', 'start_date'),
+    Input('date-slider', 'end_date')
+)
+def get_artist1(start, end):
+    data_filtered = data[data['date'].between(start, end)]
+    top = data_filtered.groupby(['trackName', 'artistName'], as_index=False)['minutes'].sum()
+    top = top.sort_values('minutes', ascending = False).reset_index()
+    return [html.H6(f"1. {top['trackName'][0]}"), html.P(f"by {top['artistName'][0]}")]
+
+@callback(
+    Output('song2', 'children'),
+    Input('date-slider', 'start_date'),
+    Input('date-slider', 'end_date')
+)
+def get_artist2(start, end):
+    data_filtered = data[data['date'].between(start, end)]
+    top = data_filtered.groupby(['trackName', 'artistName'], as_index=False)['minutes'].sum()
+    top = top.sort_values('minutes', ascending = False).reset_index()
+    return [html.H6(f"2. {top['trackName'][1]}"), html.P(f"by {top['artistName'][1]}")]
+
+@callback(
+    Output('song3', 'children'),
+    Input('date-slider', 'start_date'),
+    Input('date-slider', 'end_date')
+)
+def get_artist3(start, end):
+    data_filtered = data[data['date'].between(start, end)]
+    top = data_filtered.groupby(['trackName', 'artistName'], as_index=False)['minutes'].sum()
+    top = top.sort_values('minutes', ascending = False).reset_index()
+    return [html.H6(f"3. {top['trackName'][2]}"), html.P(f"by {top['artistName'][2]}")]
 
 
 ############################################################################################################################################
@@ -379,6 +470,7 @@ def create_line_plot(start, end):
         x = alldata.index,
         mode = 'lines',
         name = "Streaming Minutes",
+        # fill = '#eba8c6',
         line_color = "#eba8c6"
     ))
 
@@ -387,7 +479,8 @@ def create_line_plot(start, end):
         x = alldata.index,
         mode = 'lines',
         name = "Unique Song Count",
-        line_color = "#4487b9"
+        line_color = "#4487b9", 
+       # yaxis='y2'
     ))
 
     fig.add_trace(go.Scatter(
@@ -395,16 +488,17 @@ def create_line_plot(start, end):
         x = alldata.index,
         mode = 'lines',
         name = 'Unique Artist Count',
-        line_color = '#e5a13a'
+        line_color = '#e5a13a', 
+       # yaxis='y2'
     ))
 
     fig.update_layout(template='plotly_white',
-                    legend=dict(yanchor="bottom", xanchor='center', x = .5, y= -.15, orientation = 'h'),
-                    height = 400)
-                    
-    fig.update_layout(
-        margin=dict(l=50, r=50, b=50, t=0)
-    )
+                    legend=dict(yanchor="bottom", xanchor='center', x = .5, y= -.2, orientation = 'h'),
+                    height = 300, 
+                    yaxis=dict(title='Streaming Minutes'),
+                    yaxis2=dict(title='Counts', overlaying='y', side='right'),
+                    margin=dict(l=50, r=50, b=50, t=0))
+
     return fig
 
 @callback(

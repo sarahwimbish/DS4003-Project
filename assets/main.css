@@ -1,0 +1,47 @@
+body {
+    background-color: rgb(251, 222, 226);
+}
+
+P {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+H2 {
+  margin: 0;
+  padding: 0;
+}
+
+H4{
+  text-align: center;
+}
+
+H6 {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.DateRangePickerInput{
+    border: 0px;
+    background-color: transparent;
+  }
+
+.container1 {
+  width: 20%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.container2 {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.container3 {
+  width: 28%;
+  display: inline-block;
+  vertical-align: top;
+}
