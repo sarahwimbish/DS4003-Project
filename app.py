@@ -44,9 +44,13 @@ color = '#4487b9'
 stroke = 2
 curve = 10
 border = ' #FFFFFF'
+shadowx = 2
+shadowy = 2
+blur = 4
 
 left1 = [
-    html.H2(["My Listening", html.Br(), "Habits"], style={'textAlign': 'center'}),
+    html.Br(), 
+    html.H2(["My", html.Br(), "Listening", html.Br(), "Habits"], style={'textAlign': 'center'}),
     html.P(id="streaming_minutes", style={'color':'white', 'textAlign': 'center', 'font-weight': 'bold', 'font-size':'60px',
                                            "text-shadow":f' -1px -{stroke}px 0 {color}, 1px -{stroke}px 0 {color}, \
                                             -1px {stroke}px 0 {color}, 1px {stroke}px 0 {color}, \
@@ -76,18 +80,24 @@ left1 = [
 ]
 
 top_artists = [
-    html.Div(html.H4(["My Top", html.Br(), 'Artists']), className = 'three columns'), 
-    html.Div(className = 'three columns', id = 'artists1'), 
-    html.Div(className = 'three columns', id = 'artists2'),
-    html.Div(className = 'three columns', id = 'artists3')
+    html.Div(html.H4(["My Top", html.Br(), 'Artists']), className = 'two columns', style={'padding-right': '10px'}), 
+    html.Div(className = 'three columns', id = 'artists1', style = {'align-items':'center', 'justify-content': 'center', 'margin':'5px'}), 
+    html.Div(className = 'three columns', id = 'artists2', style = {'align-items':'center', 'justify-content': 'center'}),
+    html.Div(className = 'three columns', id = 'artists3', style = {'align-items':'center', 'justify-content': 'center'})
 
 ]
 
 top_songs = [
-    html.Div(html.H4(["My Top", html.Br(), 'Songs']), className = 'three columns'), 
-    html.Div(className = 'three columns', id = 'song1'), 
-    html.Div(className = 'three columns', id = 'song2'),
-    html.Div(className = 'three columns', id = 'song3')
+    html.Div(html.H4(["My Top", html.Br(), 'Songs']), className = 'myTop'), 
+
+    html.Div([html.Div(1, className = 'number'), 
+              html.Div(className = 'text', id = 'song1')], className = 'boxes'), 
+
+    html.Div([html.Div(2, className = 'number'), 
+              html.Div(className = 'text', id = 'song2')], className = 'boxes'), 
+    
+    html.Div([html.Div(3, className = 'number'), 
+              html.Div(className = 'text', id = 'song3')], className = 'boxes'), 
 
 ]
 
@@ -122,11 +132,12 @@ app.layout = html.Div( # entire page
             [
                 html.H1("Sarah's Spotify Dashboard"), # title 
                 html.H3("blah blah blah "), # description
-            ],style={"border":"2px {boarder}", 
+            ], id = 'mainContainer',style={"border":"2px {boarder}", 
                      'textAlign': 'center', 
                      'background-color':'white', 
                      'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
-                     'margin':'0px 5px'}),
+                     'margin':'0px 5px',
+                     'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'}),
 
 
         html.Div(# Bottom of Page 
@@ -139,7 +150,8 @@ app.layout = html.Div( # entire page
                                 'justify-content':'center', 
                                 'background-color':'white', 
                                 'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
-                                'margin':'0px 5px'}), 
+                                'margin':'0px 5px',
+                                'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'}), 
                 
 
 
@@ -156,24 +168,26 @@ app.layout = html.Div( # entire page
                                             'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
                                             'background-color': 'white',
                                             'padding':'10px',
-                                            'margin':'0px 0px 5px 0px'}),
+                                            'margin':'0px 0px 5px 0px',
+                                            'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'}),
                         html.Div([dcc.Graph(id='line-plot')], style={'border':'2px {border}',
                                                                     'border-radius':f'{curve}px {curve}px {curve}px {curve}px',
                                                                     'background-color': 'white',
                                                                     'padding':'5px',
-                                                                    'margin':'5px 0px 0px 0px'}),
+                                                                    'margin':'5px 0px 0px 0px',
+                                                                    'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'}),
                         html.Div(top_artists, style={'border-radius':f'{curve}px {curve}px {curve}px {curve}px',
                                                                     'background-color': 'white',
                                                                     'margin':'5px 0px 0px 0px', 
                                                                     'overflow': 'hidden',
                                                                     'align-items': 'center',
-                                                                     'justify-content': 'center',}),
+                                                                    'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'}),
                         html.Div(top_songs, style={'border-radius':f'{curve}px {curve}px {curve}px {curve}px',
                                                                     'background-color': 'white',
                                                                     'margin':'5px 0px 0px 0px', 
                                                                     'overflow': 'hidden',
                                                                     'align-items': 'center',
-                                                                     'justify-content': 'center'})                      
+                                                                    'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'})                      
                     ], className='container2', style ={'margin':'0px 5px'}),
 
 
@@ -192,12 +206,14 @@ app.layout = html.Div( # entire page
                                     style={'textAlign': 'center'})
                         ], style = {'background-color':'white', 
                                     'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
-                                    'margin':'0px 5px'}), 
+                                    'margin':'0px 5px',
+                                    'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'}), 
                         html.Div(dcc.Graph(id='bar-plot'), style ={'background-color':'white', 
                                                                      'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
                                                                      'margin':'5px 5px', 
                                                                      'padding':'5px',
-                                                                     'padding-left':'35px', }),
+                                                                     'padding-left':'35px', 
+                                                                     'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'}),
                         # DashIconify(icon="ion:logo-github", width=30, href='github.com')
                         ], className = 'container3', style={})
     ], style={"border":"2px {border}", 'margin-top': '0px'}) ], className='row')
@@ -299,33 +315,33 @@ def get_artist3(start, end):
     Input('date-slider', 'start_date'),
     Input('date-slider', 'end_date')
 )
-def get_artist1(start, end):
+def get_song1(start, end):
     data_filtered = data[data['date'].between(start, end)]
     top = data_filtered.groupby(['trackName', 'artistName'], as_index=False)['minutes'].sum()
     top = top.sort_values('minutes', ascending = False).reset_index()
-    return [html.H6(f"1. {top['trackName'][0]}"), html.P(f"by {top['artistName'][0]}")]
+    return [html.H6(f"{top['trackName'][0]}", className='artist'), html.P(f"by {top['artistName'][0]}")]
 
 @callback(
     Output('song2', 'children'),
     Input('date-slider', 'start_date'),
     Input('date-slider', 'end_date')
 )
-def get_artist2(start, end):
+def get_song2(start, end):
     data_filtered = data[data['date'].between(start, end)]
     top = data_filtered.groupby(['trackName', 'artistName'], as_index=False)['minutes'].sum()
     top = top.sort_values('minutes', ascending = False).reset_index()
-    return [html.H6(f"2. {top['trackName'][1]}"), html.P(f"by {top['artistName'][1]}")]
+    return [html.H6(f"{top['trackName'][1]}", className='artist'), html.P(f"by {top['artistName'][1]}")]
 
 @callback(
     Output('song3', 'children'),
     Input('date-slider', 'start_date'),
     Input('date-slider', 'end_date')
 )
-def get_artist3(start, end):
+def get_song3(start, end):
     data_filtered = data[data['date'].between(start, end)]
     top = data_filtered.groupby(['trackName', 'artistName'], as_index=False)['minutes'].sum()
     top = top.sort_values('minutes', ascending = False).reset_index()
-    return [html.H6(f"3. {top['trackName'][2]}"), html.P(f"by {top['artistName'][2]}")]
+    return [html.H6(f"{top['trackName'][2]}", className='artist'), html.P(f"by {top['artistName'][2]}")]
 
 
 ############################################################################################################################################
@@ -471,7 +487,8 @@ def create_line_plot(start, end):
         mode = 'lines',
         name = "Streaming Minutes",
         # fill = '#eba8c6',
-        line_color = "#eba8c6"
+        line_color = "#eba8c6",
+        line_width = 1
     ))
 
     fig.add_trace(go.Scatter(
@@ -480,6 +497,7 @@ def create_line_plot(start, end):
         mode = 'lines',
         name = "Unique Song Count",
         line_color = "#4487b9", 
+        line_width = 1, 
        # yaxis='y2'
     ))
 
@@ -489,12 +507,13 @@ def create_line_plot(start, end):
         mode = 'lines',
         name = 'Unique Artist Count',
         line_color = '#e5a13a', 
+        line_width = 1,
        # yaxis='y2'
     ))
 
     fig.update_layout(template='plotly_white',
                     legend=dict(yanchor="bottom", xanchor='center', x = .5, y= -.2, orientation = 'h'),
-                    height = 300, 
+                    height = 355, 
                     yaxis=dict(title='Streaming Minutes'),
                     yaxis2=dict(title='Counts', overlaying='y', side='right'),
                     margin=dict(l=50, r=50, b=50, t=0))
