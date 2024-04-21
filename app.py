@@ -11,6 +11,8 @@ import plotly.tools as tls
 from io import BytesIO
 import base64
 import plotly.express as px 
+from datetime import date
+import datetime
 
 
 
@@ -76,14 +78,20 @@ left1 = [
                                             -{stroke}px {stroke}px 0 {color}, {stroke}px {stroke}px 0 {color}'}),
     html.Center("Different Artists"),
     html.Br(),
-    html.Center(id = 'date_annotation')
+    html.Center(id = 'date_annotation', style = {'margin-bottom':"15px"}),
 ]
 
 top_artists = [
-    html.Div(html.H4(["My Top", html.Br(), 'Artists']), className = 'two columns', style={'padding-right': '10px'}), 
-    html.Div(className = 'three columns', id = 'artists1', style = {'align-items':'center', 'justify-content': 'center', 'margin':'5px'}), 
-    html.Div(className = 'three columns', id = 'artists2', style = {'align-items':'center', 'justify-content': 'center'}),
-    html.Div(className = 'three columns', id = 'artists3', style = {'align-items':'center', 'justify-content': 'center'})
+    html.Div(html.H4(["My Top", html.Br(), 'Artists']), className = 'myTop'), 
+
+    html.Div([html.Div(1, className = 'number2'), 
+              html.Div(className = 'text', id = 'artists1')], className = 'boxes'), 
+
+    html.Div([html.Div(2, className = 'number2'), 
+              html.Div(className = 'text', id = 'artists2')], className = 'boxes'), 
+    
+    html.Div([html.Div(3, className = 'number2'), 
+              html.Div(className = 'text', id = 'artists3')], className = 'boxes'), 
 
 ]
 
@@ -131,12 +139,16 @@ app.layout = html.Div( # entire page
         html.Div( # Top of Page 
             [
                 html.H1("Sarah's Spotify Dashboard"), # title 
-                html.H3("blah blah blah "), # description
+                html.Div(html.Div([
+                            html.Div(html.H3('BLAH BLAH BLAH'), className= 'description'),
+                            html.Div(html.A(html.Div([html.Img(id = 'githublink', src="/assets/github-logo.png", style={'width':'30px', 'height':'30px'})
+                            ]), href="https://github.com/sarahwimbish/DS4003-Project", target='blank'), className = 'github-link')
+                        ]), className = 'description-and-link'), # description
             ], id = 'mainContainer',style={"border":"2px {boarder}", 
                      'textAlign': 'center', 
                      'background-color':'white', 
                      'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
-                     'margin':'0px 5px',
+                     'margin':'5px 5px',
                      'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'}),
 
 
@@ -162,14 +174,25 @@ app.layout = html.Div( # entire page
                                     min_date_allowed= data['date'].min(),
                                     max_date_allowed= data['date'].max(),
                                     start_date = data['date'].min(),
-                                    end_date = data['date'].max()),
-                                html.Button('RESET DATE', id='reset-button', n_clicks=0, style={'background-color': 'white', "margin-left": "15px"}),
+                                    end_date = data['date'].max(), 
+                                    show_outside_days=True,
+                                    day_size=32,
+                                    display_format='MM/DD/YYYY',
+                                    style={'zIndex': 10},
+                                    className = 'five columns'),
+                                html.Button('RESET DATE', id='reset-button', n_clicks=0, style={'background-color': 'white'}, className = 'three columns'),
+                                dcc.RadioItems(options = ["Daily", "Weekly", "Monthly"],
+                                    value = "Daily",
+                                    inline = True,
+                                    id='timeframe-radio',
+                                    style={'textAlign': 'center', 'vertical-align': 'middle', 'margin': '0px'}, inputStyle={"margin-left": "12px"}, className = 'four columns')
                                 ], style={'border':'2px {border}',
                                             'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
                                             'background-color': 'white',
                                             'padding':'10px',
                                             'margin':'0px 0px 5px 0px',
-                                            'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'}),
+                                            'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)',
+                                            'overflow': 'hidden'}),
                         html.Div([dcc.Graph(id='line-plot')], style={'border':'2px {border}',
                                                                     'border-radius':f'{curve}px {curve}px {curve}px {curve}px',
                                                                     'background-color': 'white',
@@ -203,7 +226,7 @@ app.layout = html.Div( # entire page
                                     value = "AM",
                                     inline = True,
                                     id='AMPM-radio',
-                                    style={'textAlign': 'center'})
+                                    style={'textAlign': 'center'}, inputStyle={"margin-left": "20px"})
                         ], style = {'background-color':'white', 
                                     'border-radius': f'{curve}px {curve}px {curve}px {curve}px',
                                     'margin':'0px 5px',
@@ -285,7 +308,7 @@ def get_artist1(start, end):
     data_filtered = data[data['date'].between(start, end)]
     top = data_filtered.groupby('artistName', as_index=False)['minutes'].sum()
     top = top.sort_values('minutes', ascending = False).reset_index()
-    return [html.H6(f"1. {top['artistName'][0]}"), html.P(f"{round(top['minutes'][0])} minutes")]
+    return [html.H6(f"{top['artistName'][0]}"), html.P(f"{round(top['minutes'][0])} minutes")]
 
 @callback(
     Output('artists2', 'children'),
@@ -296,7 +319,7 @@ def get_artist2(start, end):
     data_filtered = data[data['date'].between(start, end)]
     top = data_filtered.groupby('artistName', as_index=False)['minutes'].sum()
     top = top.sort_values('minutes', ascending = False).reset_index()
-    return [html.H6(f"2. {top['artistName'][1]}"), html.P(f"{round(top['minutes'][1])} minutes")]
+    return [html.H6(f"{top['artistName'][1]}"), html.P(f"{round(top['minutes'][1])} minutes")]
 
 @callback(
     Output('artists3', 'children'),
@@ -307,7 +330,7 @@ def get_artist3(start, end):
     data_filtered = data[data['date'].between(start, end)]
     top = data_filtered.groupby('artistName', as_index=False)['minutes'].sum()
     top = top.sort_values('minutes', ascending = False).reset_index()
-    return [html.H6(f"3. {top['artistName'][2]}"), html.P(f"{round(top['minutes'][2])} minutes")]
+    return [html.H6(f"{top['artistName'][2]}"), html.P(f"{round(top['minutes'][2])} minutes")]
 
 
 @callback(
@@ -342,6 +365,43 @@ def get_song3(start, end):
     top = data_filtered.groupby(['trackName', 'artistName'], as_index=False)['minutes'].sum()
     top = top.sort_values('minutes', ascending = False).reset_index()
     return [html.H6(f"{top['trackName'][2]}", className='artist'), html.P(f"by {top['artistName'][2]}")]
+
+
+@callback(
+    Output('timeframe-radio', 'options'),
+    Input('date-slider', 'start_date'), 
+    Input('date-slider', 'end_date')
+)
+def update_radio_items(start, end):
+    if start and end:
+        # Calculate the duration between start and end dates
+        start = datetime.datetime.fromisoformat(start)
+        end = datetime.datetime.fromisoformat(end)
+        duration = end - start
+
+        # Default radio options
+        options = [
+            {'label': 'Daily', 'value': 'Daily'},
+            {'label': 'Weekly', 'value': 'Weekly'},
+            {'label': 'Monthly', 'value': 'Monthly'}
+        ]
+
+        # Disable "Monthly" if duration is less than 6 months
+        if duration.days < 180:  # 6 months approx
+            options = [opt for opt in options if opt['value'] != 'Monthly']
+
+        # Disable "Weekly" if duration is less than 6 weeks
+        if duration.days < 42:  # 6 weeks
+            options = [opt for opt in options if opt['value'] != 'Weekly']
+
+        return options
+
+    # Fallback to default options in case of errors
+    return [
+        {'label': 'Daily', 'value': 'Daily'},
+        {'label': 'Weekly', 'value': 'Weekly'},
+        {'label': 'Monthly', 'value': 'Monthly'}
+    ]
 
 
 ############################################################################################################################################
@@ -463,18 +523,37 @@ def create_plot1(hours_selected, start, end):
 @callback(
     Output('line-plot', 'figure'),
     Input('date-slider', 'start_date'),
-    Input('date-slider', 'end_date')
+    Input('date-slider', 'end_date'),
+    Input('timeframe-radio', 'value')
 )
-def create_line_plot(start, end):
+def create_line_plot(start, end, timeframe):
     data_filtered = data[data['date'].between(start, end)]
-
-    totalminutes = data_filtered.groupby('date')['minutes'].sum()
-    totalminutes = totalminutes.apply(lambda x: int(x))
-
     data_filtered = data_filtered[data_filtered['played']==True]
+    data_filtered['week_number'] = data_filtered['date'].dt.to_period('W')
+    data_filtered['week_number'] = data_filtered['week_number'].dt.start_time
+    data_filtered['month_name'] = data_filtered['date'].dt.to_period('M').astype(str)
 
-    numberofartists = data_filtered.groupby('date')['artistName'].nunique()
-    numberofsongs = data_filtered.groupby('date')['trackName'].nunique()
+    start = datetime.datetime.fromisoformat(start)
+    end = datetime.datetime.fromisoformat(end)
+    duration = end - start
+    
+    # Group by the selected timeframe
+    if timeframe == 'Daily':
+        data_grouped = data_filtered.groupby('date')
+    elif timeframe == 'Weekly':
+        # Get week number from date
+        data_grouped = data_filtered.groupby('week_number')
+    elif timeframe == 'Monthly':
+        # Get month name from date
+        data_grouped = data_filtered.groupby('month_name')
+    else:
+        data_grouped = data_filtered.groupby('date')
+
+
+    totalminutes = data_grouped['minutes'].sum()
+    totalminutes = totalminutes.apply(lambda x: int(x))
+    numberofartists = data_grouped['artistName'].nunique()
+    numberofsongs = data_grouped['trackName'].nunique()
 
     alldata = pd.DataFrame(totalminutes)
     alldata['numberofsongs'] = numberofsongs
@@ -497,8 +576,7 @@ def create_line_plot(start, end):
         mode = 'lines',
         name = "Unique Song Count",
         line_color = "#4487b9", 
-        line_width = 1, 
-       # yaxis='y2'
+        line_width = 1
     ))
 
     fig.add_trace(go.Scatter(
@@ -507,15 +585,13 @@ def create_line_plot(start, end):
         mode = 'lines',
         name = 'Unique Artist Count',
         line_color = '#e5a13a', 
-        line_width = 1,
-       # yaxis='y2'
+        line_width = 1
     ))
 
     fig.update_layout(template='plotly_white',
                     legend=dict(yanchor="bottom", xanchor='center', x = .5, y= -.2, orientation = 'h'),
                     height = 355, 
-                    yaxis=dict(title='Streaming Minutes'),
-                    yaxis2=dict(title='Counts', overlaying='y', side='right'),
+                    yaxis=dict(title=''),
                     margin=dict(l=50, r=50, b=50, t=0))
 
     return fig
@@ -523,24 +599,44 @@ def create_line_plot(start, end):
 @callback(
     Output('bar-plot', 'figure'),
     Input('date-slider', 'start_date'),
-    Input('date-slider', 'end_date')
+    Input('date-slider', 'end_date'),
+    Input('timeframe-radio', 'value')
 )
-def create_bar_plot(start, end):
+def create_bar_plot(start, end, timeframe):
     data_filtered = data[data['date'].between(start, end)]
-    times = data_filtered.groupby(['timeofday'], as_index=False)['minutes'].sum()
-    times['timeofday'] = ['12pm-6pm', "5am-12pm", "6pm-5am"]
-    times['timeofday'] = times['timeofday'].astype('category')
-    times['timeofday'] = times['timeofday'].cat.reorder_categories(["5am-12pm", '12pm-6pm', '6pm-5am'])
+
+    d0 = pd.to_datetime(start)
+    d1 =pd.to_datetime(end)
+    days = (d1 - d0).days
+    axis = 'Average Daily <br> Listening Minutes'
+
+    if timeframe == 'Daily':
+        days = (d1 - d0).days
+        axis = 'Average Daily <br> Listening Minutes'
+    elif timeframe == 'Weekly':
+        days = (d1 - d0).days/7
+        axis = 'Average Weekly <br> Listening Minutes'
+    elif timeframe == 'Monthly':
+        days = (d1 - d0).days/30
+        axis = 'Average Monthly <br> Listening Minutes'
+    else:
+        days = (d1 - d0).days
+        axis = 'Average Daily <br> Listening Minutes'
+
+    times = data_filtered.groupby(['hour','timeofday'], as_index=False)['minutes'].sum()
+    times['minutes'] = times['minutes']/days
 
     fig = go.Figure()
-    fig = px.bar(times.sort_values('timeofday'), 
-                x='timeofday', 
+    fig = px.bar(times.sort_values('hour'), 
+                x='hour', 
                 y='minutes',
                 color = 'timeofday',
-                color_discrete_map ={'5am-12pm': '#eba8c6', '6pm-5am': '#4487b9', '12pm-6pm':'#e5a13a'}, 
+                color_discrete_map ={'Morning': '#eba8c6', 'Afternoon': '#4487b9', 'Night':'#e5a13a'}, 
                 template = 'plotly_white', 
-                labels = {'minutes': 'Total Listening Minutes',
-                        'timeofday':' '}, 
-                height=250)
-    fig.layout.update(showlegend=False) 
+                labels = {'minutes': axis,
+                        'hour':'Hour of Day',
+                        'timeofday':''}, 
+                height=265)
+    fig.update_layout(showlegend = False, legend_traceorder="reversed",
+                      legend=dict(yanchor="auto", xanchor='auto', x = .5, y= -1.5, orientation = 'h'))
     return fig 
