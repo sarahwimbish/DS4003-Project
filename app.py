@@ -37,6 +37,7 @@ data['date'] = pd.to_datetime(data['date'])
 
 
 
+
 ############################################################################################################################################
 #######################################################            HTML CHUNKS           ###################################################
 ############################################################################################################################################
@@ -137,10 +138,8 @@ border = 'white'
 app.layout = html.Div( # entire page
     [
         html.Div( # Top of Page 
-            [
-                html.H1("Sarah's Spotify Dashboard"), # title 
-                html.Div(html.Div([
-                            html.Div(html.H3('BLAH BLAH BLAH'), className= 'description'),
+            [               html.Div(html.Div([
+                            html.Div(html.H1("Sarah's Spotify Dashboard"), className= 'description', style ={'margin':'20px 0 0 50px'}),
                             html.Div(html.A(html.Div([html.Img(id = 'githublink', src="/assets/github-logo.png", style={'width':'30px', 'height':'30px'})
                             ]), href="https://github.com/sarahwimbish/DS4003-Project", target='blank'), className = 'github-link')
                         ]), className = 'description-and-link'), # description
@@ -175,10 +174,6 @@ app.layout = html.Div( # entire page
                                     max_date_allowed= data['date'].max(),
                                     start_date = data['date'].min(),
                                     end_date = data['date'].max(), 
-                                    show_outside_days=True,
-                                    day_size=32,
-                                    display_format='MM/DD/YYYY',
-                                    style={'zIndex': 10},
                                     className = 'five columns'),
                                 html.Button('RESET DATE', id='reset-button', n_clicks=0, style={'background-color': 'white'}, className = 'three columns'),
                                 dcc.RadioItems(options = ["Daily", "Weekly", "Monthly"],
@@ -192,13 +187,15 @@ app.layout = html.Div( # entire page
                                             'padding':'10px',
                                             'margin':'0px 0px 5px 0px',
                                             'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)',
-                                            'overflow': 'hidden'}),
+                                            'height':'40px',
+                                            'z-index':'10'}),
                         html.Div([dcc.Graph(id='line-plot')], style={'border':'2px {border}',
                                                                     'border-radius':f'{curve}px {curve}px {curve}px {curve}px',
                                                                     'background-color': 'white',
                                                                     'padding':'5px',
                                                                     'margin':'5px 0px 0px 0px',
-                                                                    'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81)'}),
+                                                                    'filter': f'drop-shadow({shadowx}px {shadowy}px {blur}px #9b7d81',
+                                                                    'z-index':'1'}),
                         html.Div(top_artists, style={'border-radius':f'{curve}px {curve}px {curve}px {curve}px',
                                                                     'background-color': 'white',
                                                                     'margin':'5px 0px 0px 0px', 

@@ -1,142 +1,157 @@
 body {
-    background-color: rgb(251, 222, 226);
+  background-color: rgb(251, 222, 226);
 
 }
 
 P {
-  text-align: center;
-  margin: 0px;
-  padding: 0px;
+text-align: center;
+margin: 0px;
+padding: 0px;
 }
 
 H2 {
-  margin: 0;
-  padding: 0;
+margin: 0;
+padding: 0;
 }
 
 H4{
-  text-align: center;
+text-align: center;
 }
 
 H6 {
-  text-align: center;
-  margin: 0;
-  padding: 0;
+text-align: center;
+margin: 0;
+padding: 0;
+}
+
+.DateRangePicker {
+position: relative; 
+}
+.DateRangePicker_picker {
+position: absolute;
+z-index: 1000;
 }
 
 .DateRangePickerInput{
-    border: 0px;
-    background-color: transparent;
-  }
+  border: 0px;
+  background-color: transparent;
+}
 
 .container1 {
-  width: 15%;
-  display: inline-block;
-  vertical-align: top;
+width: 15%;
+display: inline-block;
+vertical-align: top;
 }
 
 .container2 {
-  width: 55%;
-  display: inline-block;
-  vertical-align: top;
+width: 55%;
+display: inline-block;
+vertical-align: top;
 }
 
 .container3 {
-  width: 28%;
-  display: inline-block;
-  vertical-align: top;
+width: 28%;
+display: inline-block;
+vertical-align: top;
 }
 
 .number2{
-  vertical-align: top;
-  color: white;
-  font-size: 50px;
-  padding: 10px;
-  align-items: center;
-  text-shadow: -1px -2px 0 #e5a13a, 1px -2px 0 #e5a13a, 
-  -1px 2px 0 #e5a13a, 1px 2px 0 #e5a13a, 
-  -2px -1px 0 #e5a13a, 2px -1px 0 #e5a13a, 
-  -2px 1px 0 #e5a13a, 2px 1px 0 #e5a13a,  
-  -2px -2px 0 #e5a13a, 2px -2px 0 #e5a13a, 
-  -2px 2px 0 #e5a13a, 2px 2px 0 #e5a13a
+vertical-align: top;
+color: white;
+font-size: 50px;
+padding: 10px;
+align-items: center;
+text-shadow: -1px -2px 0 #e5a13a, 1px -2px 0 #e5a13a, 
+-1px 2px 0 #e5a13a, 1px 2px 0 #e5a13a, 
+-2px -1px 0 #e5a13a, 2px -1px 0 #e5a13a, 
+-2px 1px 0 #e5a13a, 2px 1px 0 #e5a13a,  
+-2px -2px 0 #e5a13a, 2px -2px 0 #e5a13a, 
+-2px 2px 0 #e5a13a, 2px 2px 0 #e5a13a
 }
 
 .number{
-  vertical-align: top;
-  color: white;
-  font-size: 50px;
-  padding: 10px;
-  align-items: center;
-  text-shadow: -1px -2px 0 #eba8c6, 1px -2px 0 #eba8c6, 
-  -1px 2px 0 #eba8c6, 1px 2px 0 #eba8c6, 
-  -2px -1px 0 #eba8c6, 2px -1px 0 #eba8c6, 
-  -2px 1px 0 #eba8c6, 2px 1px 0 #eba8c6,  
-  -2px -2px 0 #eba8c6, 2px -2px 0 #eba8c6, 
-  -2px 2px 0 #eba8c6, 2px 2px 0 #eba8c6
+vertical-align: top;
+color: white;
+padding: 10px;
+font-size: 50px;
+align-items: center;
+text-shadow: -2px -2px 0 #eba8c6, 2px -2px 0 #eba8c6, 
+-2px 2px 0 #eba8c6, 2px 2px 0 #eba8c6, 
+-2px -2px 0 #eba8c6, 2px -2px 0 #eba8c6, 
+-2px 2px 0 #eba8c6, 2px 2px 0 #eba8c6,  
+-2px -2px 0 #eba8c6, 2px -2px 0 #eba8c6, 
+-2px 2px 0 #eba8c6, 2px 2px 0 #eba8c6
 }
 
 
 .text { 
-  vertical-align: center;
-  text-align: center;
-  padding: 3px;
-  align-items: center;
-  width: 100%
+vertical-align: center;
+text-align: center;
+padding: 3px;
+align-items: center;
+width: 100%
 
 }
 
 .boxes {
-  width: 28%;
-  vertical-align: top;
-  display: inline-flex;
-  align-items: center;
+width: 28%;
+vertical-align: top;
+display: inline-flex;
+align-items: center;
 
 }
 
 
 .myTop {
-  width: 15%;
-  display: inline-block;
-  vertical-align: center;
-  text-align: center;
+width: 15%;
+display: inline-block;
+vertical-align: center;
+text-align: center;
 }
 
 .artist{
-  font-size: 20px;
-  text-align: center;
+font-size: 20px;
+text-align: center;
 }
 
 .github-link {
-  width: 5%;
-  display: inline-block;
-  vertical-align: center;
-  align-items: right;
+width: 5%;
+display: inline-block;
+vertical-align: center;
+align-items: right;
 }
 
 .description {
-  width: 90%;
-  display: inline-block;
-  vertical-align: center;
-  align-items: right;
-  margin: 0px; 
+width: 90%;
+display: inline-block;
+vertical-align: center;
+align-items: right;
+color: white;
+font-size: 60px;
+text-shadow: -1px -2px 0 #eba8c6, 1px -2px 0 #eba8c6, 
+-1px 2px 0 #eba8c6, 1px 2px 0 #eba8c6, 
+-2px -1px 0 #eba8c6, 2px -1px 0 #eba8c6, 
+-2px 1px 0 #eba8c6, 2px 1px 0 #eba8c6,  
+-2px -2px 0 #eba8c6, 2px -2px 0 #eba8c6, 
+-2px 2px 0 #eba8c6, 2px 2px 0 #eba8c6
 }
 
 .description-and-link { 
-  margin: 5px;
-  padding: 0px; 
+margin: 5px;
+padding: 0px; 
 }
 
-h1 { 
-  margin: 0px;
-  padding: 0px;
-}
 
 h3{
-  margin: 0px;
-  padding: 0px;
+margin: 0px;
+padding: 0px;
 }
 
 #timeframe-radio {
-  margin: 20px 10px 0 10px;
-  padding: 8px 0 0 0;
+margin: 20px 10px 0 10px;
+padding: 8px 0 0 0;
 } 
+
+h1 {
+font-size: 60px;
+}
